@@ -24,3 +24,20 @@
 h1 {
   color: white;
 }
+
+#displaySearchTerms {
+  margin: 0;
+}
+
+.inputGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 50vw;
+  margin: auto;
+  background-color: aliceblue;
+}
+.searchTermGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
