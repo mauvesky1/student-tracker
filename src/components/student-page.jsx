@@ -8,24 +8,42 @@ class Student extends React.Component {
     startingCohort: 0,
     name: ""
   };
+
+  formatBlockHistory = () => {
+    let formattedHistory = "";
+    this.state.blockHistory.forEach((block, index) => {
+      formattedHistory += `${block.name} A  `;
+    });
+
+    return formattedHistory;
+  };
   componentDidMount = () => {
     axios
       .get(
         `https://nc-student-tracker.herokuapp.com/api/students/${this.props.id}`
       )
       .then(({ data }) => {
-        this.setState({ state: data.student });
+        this.setState({
+          id: data.student._id,
+          name: data.student.name,
+          startingCohort: data.student.startingCohort,
+          blockHistory: data.student.blockHistory
+        });
       });
   };
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.id != this.props.id) {
-      console.log("updating");
       axios
         .get(
           `https://nc-student-tracker.herokuapp.com/api/students/${this.props.id}`
         )
         .then(({ data }) => {
-          this.setState({ state: data.student });
+          this.setState({
+            id: data.student._id,
+            name: data.student.name,
+            startingCohort: data.student.startingCohort,
+            blockHistory: data.student.blockHistory
+          });
         });
     }
   };
@@ -33,13 +51,16 @@ class Student extends React.Component {
   render() {
     return (
       <div>
-        <p
-          onClick={() => {
-            this.forceUpdate();
-          }}
-        >
-          Hello!
+        <p>
+          Student ID: {this.state.id}
+          {this.state.startingCohort}, name:{this.state.name}
+          startingCohort:{this.state.startingCohort},
         </p>
+        <ul>
+          {this.state.blockHistory.map((block, index) => {
+            return <li key={index + block.name}>{block.name} </li>;
+          })}
+        </ul>
       </div>
     );
   }

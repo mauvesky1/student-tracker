@@ -4,6 +4,8 @@ import StudentList from "./students-list";
 import StudentForm from "./students-form";
 import { Router } from "@reach/router";
 import Student from "../student-page";
+import Toggle from "../toggle";
+import SendStudent from "../SendStudent";
 
 class Students extends React.Component {
   state = { studentData: [], isLoading: true, query: "" };
@@ -43,11 +45,14 @@ class Students extends React.Component {
           <Student path="/:id" />
         </Router>
         <StudentList studentData={this.state.studentData} />
-        <StudentForm
-          updateQuery={this.updateQuery}
-          studentData={this.state.studentData}
-          resetStudents={this.resetStudents}
-        />
+        <Toggle>
+          <StudentForm
+            updateQuery={this.updateQuery}
+            studentData={this.state.studentData}
+            resetStudents={this.resetStudents}
+          />
+          <SendStudent />
+        </Toggle>
       </div>
     );
   }
