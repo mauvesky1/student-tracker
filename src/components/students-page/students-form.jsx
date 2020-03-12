@@ -2,34 +2,82 @@ import React from "react";
 
 class studentsForm extends React.Component {
   state = {
-    input: ""
+    input: "",
+    finalQuery: "",
+    primarySelectBox: "",
+    secondarySelectBox: ""
   };
 
-  changeInput = event => {
-    console.log(event.target.value);
-    this.setState({ input: event.target.value });
+  formatInput = () => {
+    const newQuery = `${this.state.primarySelectBox}=${this.state.secondarySelectBox}&`;
+    this.props.updateQuery(newQuery);
+    console.log(
+      "console log",
+      this.state.primarySelectBox,
+      this.state.secondarySelectBox
+    );
   };
 
+  changePrimarySelectBox = event => {
+    this.setState({
+      primarySelectBox: event.target.value,
+      secondarySelectBox: ""
+    });
+  };
+
+  changeSecondarySelectBox = event => {
+    this.setState({ secondarySelectBox: event.target.value });
+  };
   render() {
     return (
       <div>
         <form
           onSubmit={event => {
             event.preventDefault();
-            console.log(event);
-            this.props.filterStudents(this.props.studentData, this.state.input);
+
+            this.formatInput();
           }}
         >
-          <input
-            value={this.state.input}
-            onChange={this.changeInput}
-            type=""
-          ></input>
-          <button>Search By Block</button>
+          <button>Submit</button>
+          <select
+            value={this.state.primarySelectBox}
+            onChange={this.changePrimarySelectBox}
+          >
+            <option value="">Select search term</option>
+            <option value="graduated">Graduated</option>
+            <option value="block">Block</option>
+          </select>
+          {this.state.primarySelectBox === "block" ? (
+            <label>
+              <select
+                value={this.state.secondarySelectBox}
+                onChange={this.changeSecondarySelectBox}
+              >
+                <option value="">Select search term</option>
+                <option value="grad">Grad</option>
+                <option value="fun">Fundamentals</option>
+                <option value="fe">Front end</option>
+                <option value="be">Back end</option>
+                <option value="proj">Projects</option>
+              </select>
+            </label>
+          ) : null}
+          {this.state.primarySelectBox === "graduated" ? (
+            <label>
+              <select
+                value={this.state.secondarySelectBox}
+                onChange={this.changeSecondarySelectBox}
+              >
+                <option value="">Select search term</option>
+                <option value="true">True</option>
+                <option value="false">false</option>
+              </select>
+            </label>
+          ) : null}
         </form>
         <button
-          onCLick={() => {
-            this.props.resetStudents;
+          onClick={event => {
+            this.props.resetStudents();
           }}
         >
           Reset

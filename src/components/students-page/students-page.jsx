@@ -4,24 +4,32 @@ import StudentList from "./students-list";
 import StudentForm from "./students-form";
 
 class StudentPage extends React.Component {
-  state = { studentData: [], isLoading: true, query: "", visibleStudents: [] };
+  state = { studentData: [], isLoading: true, query: "" };
 
-  filterStudents = (studentData, block) => {
-    const filteredData = studentData.filter(student => {
-      if (student.currentBlock === block) {
-        return student;
-      }
-    });
-    this.setState({ visibleStudents: filteredData });
+  updateQuery = newQuery => {
+    this.setState({ query: newQuery });
   };
 
   resetStudents = () => {
-    this.setState({ visibleStudents: this.state.studentData });
+    this.setState({ query: "" });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.dir(prevState);
+    if (prevState.query !== this.state.query) {
+      axios
+        .get(
+          `https://nc-student-tracker.herokuapp.com/api/students?${this.state.query}`
+        )
+        .then(({ data }) => {
+          this.setState({ studentData: data.students });
+        });
+    }
   };
 
   componentDidMount = () => {
     axios
-      .get("https://nc-student-tracker.herokuapp.com/api/students")
+      .get(`https://nc-student-tracker.herokuapp.com/api/students?`)
       .then(({ data }) => {
         this.setState({ studentData: data.students });
       });
@@ -30,9 +38,9 @@ class StudentPage extends React.Component {
   render() {
     return (
       <div>
-        <StudentList studentData={this.state.visibleStudents} />
+        <StudentList studentData={this.state.studentData} />
         <StudentForm
-          filterStudents={this.filterStudents}
+          updateQuery={this.updateQuery}
           studentData={this.state.studentData}
           resetStudents={this.resetStudents}
         />
