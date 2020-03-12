@@ -106,7 +106,6 @@ class studentsForm extends React.Component {
         </button>
         <button
           onClick={() => {
-            console.log(this.state.finalQuery);
             this.props.updateQuery(this.state.finalQuery);
             this.setState({
               input: "",

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 function StudentList(props) {
   return (
@@ -12,7 +13,9 @@ function StudentList(props) {
       {props.studentData.map(student => {
         return (
           <li key={student._id} className="studentGrid">
-            <p> {student._id}</p>
+            <p>
+              <Link to={`/students/${student._id}`}>{student._id}</Link>
+            </p>
             <p>{student.name}</p>
             <p>{student.currentBlock}</p>
             <p>{student.startingCohort}</p>

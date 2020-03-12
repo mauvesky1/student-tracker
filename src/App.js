@@ -1,7 +1,7 @@
 import React from "react";
 import studentsForm from "./components/students-page/students-form";
 import Nav from "./components/nav";
-import StudentPage from "./components/students-page/students-page";
+import Students from "./components/students-page/students-page";
 import Home from "./components/Home";
 
 import "./App.css";
@@ -18,7 +18,7 @@ class App extends React.Component {
         <Nav />
         <Router>
           <Home path="/" />
-          <StudentPage path="/students" />
+          <Students path="/students/*" />
         </Router>
       </div>
     );

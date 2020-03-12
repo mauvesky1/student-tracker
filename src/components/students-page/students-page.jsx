@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import StudentList from "./students-list";
 import StudentForm from "./students-form";
+import { Router } from "@reach/router";
+import Student from "../student-page";
 
-class StudentPage extends React.Component {
+class Students extends React.Component {
   state = { studentData: [], isLoading: true, query: "" };
 
   updateQuery = newQuery => {
@@ -15,7 +17,6 @@ class StudentPage extends React.Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    console.dir(prevState);
     if (prevState.query !== this.state.query) {
       axios
         .get(
@@ -38,6 +39,9 @@ class StudentPage extends React.Component {
   render() {
     return (
       <div>
+        <Router>
+          <Student path="/:id" />
+        </Router>
         <StudentList studentData={this.state.studentData} />
         <StudentForm
           updateQuery={this.updateQuery}
@@ -49,4 +53,4 @@ class StudentPage extends React.Component {
   }
 }
 
-export default StudentPage;
+export default Students;
