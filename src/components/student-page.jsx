@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import StudentCard from "./students-page/student-card";
 
 class Student extends React.Component {
   state = {
@@ -17,6 +18,12 @@ class Student extends React.Component {
 
     return formattedHistory;
   };
+
+  updateStudent = () => {
+    console.log("updating...");
+    return null;
+  };
+
   componentDidMount = () => {
     axios
       .get(
@@ -51,16 +58,7 @@ class Student extends React.Component {
   render() {
     return (
       <div>
-        <p>
-          Student ID: {this.state.id}
-          {this.state.startingCohort}, name:{this.state.name}
-          startingCohort:{this.state.startingCohort},
-        </p>
-        <ul>
-          {this.state.blockHistory.map((block, index) => {
-            return <li key={index + block.name}>{block.name} </li>;
-          })}
-        </ul>
+        <StudentCard student={this.state} />
       </div>
     );
   }

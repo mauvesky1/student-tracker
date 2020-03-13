@@ -14,7 +14,7 @@ class Toggle extends React.Component {
   render() {
     return (
       <>
-        <button onClick={this.swapToggle}>Post</button>
+        <button onClick={this.swapToggle}>Post a student</button>
         {this.state.toggle === false
           ? this.props.children[0]
           : this.props.children[1]}
